@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  php-httpd:
+    image: php:7.3-apache
+    ports:
+      - 80:80
+    volumes:
+      - "./DocumentRoot/:/var/www/html"
+
+  mariadb:
+    image: mariadb:10.5.2
+    volumes:
+      - /home/chuhuynh/data_from_db:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: "chudeptrai123"
+      MYSQL_USER: 'test'
+      MYSQL_PASSWORD: 'test@123'
+      MYSQL_DATABASE: 'testdb'
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - 'mariadb:db'
+    ports:
+      - 8081:80
+
+
